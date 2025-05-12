@@ -27,9 +27,13 @@ type OnCreateEvent = FirestoreEvent<QueryDocumentSnapshot | undefined>
 type OnUpdateEvent = FirestoreEvent<Change<QueryDocumentSnapshot> | undefined>
 type OnDeleteEvent = FirestoreEvent<QueryDocumentSnapshot | undefined>
 
+function initAlgolia() {
+	return algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_KEY!, {})
+}
+
 function onCreated<const T extends `${string}/${string}`>(document: T) {
 	return async function (event: OnCreateEvent) {
-		const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_KEY!, {})
+		const client = initAlgolia()
 
 		const data = event.data
 		if (!data)
@@ -51,7 +55,7 @@ function onCreated<const T extends `${string}/${string}`>(document: T) {
 
 function onUpdated<const T extends `${string}/${string}`>(document: T) {
 	return async function (event: OnUpdateEvent) {
-		const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_KEY!, {})
+		const client = initAlgolia()
 
 		const data = event.data
 		if (!data)
@@ -73,7 +77,7 @@ function onUpdated<const T extends `${string}/${string}`>(document: T) {
 
 function onDeleted(document: string) {
 	return async function (event: OnDeleteEvent) {
-		const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_KEY!, {})
+		const client = initAlgolia()
 
 		const data = event.data
 		if (!data)
