@@ -1,6 +1,6 @@
-onlyBuiltDependencies:
-  - "@firebase/util"
-  - esbuild
-  - protobufjs
 shellEmulator: true
 trustPolicy: no-downgrade
+onlyBuiltDependencies:
+  - '@firebase/util'
+  - esbuild
+  - protobufjs
