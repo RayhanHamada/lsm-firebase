@@ -1,12 +1,11 @@
 {
 	"compilerOptions": {
-		"target": "es2017",
+		"target": "es2022",
 		"module": "NodeNext",
 		"moduleResolution": "nodenext",
 		"strict": true,
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
-		"outDir": "lib",
 		"sourceMap": true,
 		"esModuleInterop": true
 	},
