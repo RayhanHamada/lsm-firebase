@@ -28,7 +28,11 @@ type OnUpdateEvent = FirestoreEvent<Change<QueryDocumentSnapshot> | undefined>
 type OnDeleteEvent = FirestoreEvent<QueryDocumentSnapshot | undefined>
 
 function initAlgolia() {
-	return algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_KEY!, {})
+	return algoliasearch(
+		process.env.ALGOLIA_APP_ID!,
+		process.env.ALGOLIA_API_KEY!,
+		{},
+	)
 }
 
 function onCreated<const T extends `${string}/${string}`>(document: T) {
@@ -40,7 +44,7 @@ function onCreated<const T extends `${string}/${string}`>(document: T) {
 			return
 
 		const objectID = data.id
-		const payload = data.data()
+		const { content, ...payload } = data.data() ?? {}
 		const indexName = document.split('/').at(0) ?? ''
 
 		await client.addOrUpdateObject({
@@ -62,7 +66,7 @@ function onUpdated<const T extends `${string}/${string}`>(document: T) {
 			return
 
 		const objectID = data.after.id
-		const payload = data.after.data()
+		const { content, ...payload } = data.after.data() ?? {}
 		const indexName = document.split('/').at(0) ?? ''
 
 		await client.addOrUpdateObject({
@@ -94,11 +98,11 @@ function onDeleted(document: string) {
 }
 
 function createHandlers<T extends `${string}/${string}`>(matcher: T) {
-	return ({
+	return {
 		created: onDocumentCreated(matcher, onCreated(matcher)),
 		updated: onDocumentUpdated(matcher, onUpdated(matcher)),
 		deleted: onDocumentDeleted(matcher, onDeleted(matcher)),
-	})
+	}
 }
 
 export const {
