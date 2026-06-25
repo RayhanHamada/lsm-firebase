@@ -1,11 +1,13 @@
 {
 	"compilerOptions": {
 		"target": "es2022",
+		"rootDir": ".",
 		"module": "NodeNext",
 		"moduleResolution": "nodenext",
 		"strict": true,
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
+		"outDir": "lib",
 		"sourceMap": true,
 		"esModuleInterop": true
 	},
